@@ -1,4 +1,4 @@
-# Naturalli Admin
+# Calendar WPA
 
 ## Prerequisites
 - Node.js 8+
