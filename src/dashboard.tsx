@@ -43,6 +43,15 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
     };
   }
 
+  componentDidMount() {
+    const { toDoList } = this.state;
+    const nextToDoList = localStorage.toDoList ? JSON.parse(localStorage.toDoList) : toDoList;
+
+    this.setState({
+      toDoList: nextToDoList
+    });
+  }
+
   onCalendarConfirm = (startDate: Date, endDate: Date) => {
     console.log('start and end date in onCalendarConfirm: ', startDate, endDate);
   }
@@ -66,6 +75,7 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
       toDoList: nextToDoList
     }, () => {
       this.switchModal(false);
+      localStorage.toDoList = JSON.stringify(nextToDoList);
     });
   }
 
@@ -75,6 +85,18 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
     event[key] = value;
     this.setState({
       event
+    });
+  }
+
+  deleteItem = (item: ToDoInfo, index: number) => {
+    const { toDoList } = this.state;
+    const nextToDoList = toDoList.filter((listItem, listIndex) => !(--index === listIndex && item.title === listItem.title));
+
+    console.log('item, index, nextToDoList: ', item, index, nextToDoList);
+    this.setState({
+      toDoList: nextToDoList
+    }, () => {
+      localStorage.toDoList = JSON.stringify(nextToDoList);
     });
   }
 
@@ -93,14 +115,14 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
         <div className='dashboard-content'>
           <List>
           {
-            toDoList.map((item, index) =><List.Item>
+            toDoList.map((item, index) =><List.Item key={ String(item.title + item.date) }>
                 <label>
                   <span className='title-index'>{ ++index }</span>
                   <span className='title-name'>{ item.title }</span>
                 </label>
                 <div className='item-content' key={ String(item) }>
                   <span className='content-date'>{ moment(item.date).format('MM/DD HH:mm') }</span>
-                  <Icon className='content-icon' type='cross' size='sm' />
+                  <Icon className='content-icon' type='cross' size='sm' onClick={ this.deleteItem.bind(this, item, index) } />
                 </div>
               </List.Item>)
           }

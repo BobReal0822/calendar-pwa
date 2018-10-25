@@ -53,22 +53,36 @@
           margin-bottom: 12px;
           background-color: #ffffff;
 
-          .am-list-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+          .am-list-line {
+            padding-right: 0 !important;
 
-            .item-content {
+            .am-list-content {
               display: flex;
-              align-items: center;
               justify-content: space-between;
-              
-              .content-date {
-
+              align-items: center;
+  
+              >label {
+                .title-index {
+                  margin-right: 6px;
+                }
+    
+                .title-name {
+    
+                }
               }
 
-              .content-icon {
+              .item-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
 
+                .content-date {
+  
+                }
+  
+                .content-icon {
+                  margin-left: 12px;
+                }
               }
             }
           }
@@ -76,5 +90,11 @@
       }
     }
 
+  }
+}
+
+.am-modal-content {
+  input {
+    text-align: right;
   }
 }
