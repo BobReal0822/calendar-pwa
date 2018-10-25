@@ -16,7 +16,7 @@
   "author": "naturali.io",
   "license": "ISC",
   "dependencies": {
-    "antd": "^3.5.4",
+    "antd-mobile": "^2.2.5",
     "axios": "^0.18.0",
     "classnames": "^2.2.5",
     "js-cookie": "^2.2.0",
@@ -25,7 +25,8 @@
     "koa-static": "^4.0.3",
     "koa-static-cache": "^5.1.2",
     "lodash": "^4.17.10",
-    "moment": "^2.22.1",
+    "moment": "^2.22.2",
+    "rc-form": "^2.2.6",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-loadable": "^5.4.0",
