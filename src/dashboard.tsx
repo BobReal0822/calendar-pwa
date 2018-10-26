@@ -1,5 +1,6 @@
 import React from 'react';
-import { DatePicker, List, Modal, InputItem, Icon } from 'antd-mobile';
+import { RouteComponentProps } from 'react-router-dom';
+import { DatePicker, List, Modal, InputItem, Icon, Toast } from 'antd-mobile';
 import moment from 'moment';
 
 import "./style/dashboard.less";
@@ -11,8 +12,8 @@ export interface ToDoInfo {
   desc?: string;
 }
 
-export interface DashboardPropsInfo {
-}
+export type DashboardPropsInfo = RouteComponentProps<{
+}>;
 
 export interface DashboardStateInfo {
   toDoList: ToDoInfo[];
@@ -67,16 +68,21 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
     const toDo: any = { ...event };
     const nextToDoList = [ toDo, ...toDoList];
 
-    this.setState({
-      event: {
-        title: '',
-        date: new Date()
-      },
-      toDoList: nextToDoList
-    }, () => {
-      this.switchModal(false);
-      localStorage.toDoList = JSON.stringify(nextToDoList);
-    });
+    if (!event.title) {
+      Toast.fail('请输入标题！');
+    } else {
+      this.setState({
+        event: {
+          title: '',
+          date: new Date()
+        },
+        toDoList: nextToDoList
+      }, () => {
+        this.switchModal(false);
+        localStorage.toDoList = JSON.stringify(nextToDoList);
+      });
+    }
+
   }
 
   handleEventData = (key: string, value: string) => {
@@ -90,7 +96,7 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
 
   deleteItem = (item: ToDoInfo, index: number) => {
     const { toDoList } = this.state;
-    const nextToDoList = toDoList.filter((listItem, listIndex) => !(--index === listIndex && item.title === listItem.title));
+    const nextToDoList = toDoList.filter((listItem, listIndex) => !(index === listIndex && item.title === listItem.title));
 
     console.log('item, index, nextToDoList: ', item, index, nextToDoList);
     this.setState({
@@ -100,6 +106,10 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
     });
   }
 
+  goLogin = () => {
+    this.props.history.push('/login');
+  }
+
   render() {
     const { isModalVisible, toDoList, event } = this.state;
 
@@ -107,9 +117,10 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
     return (
       <div className='calendar-dashboard'>
         <div className='dashboard-header'>
-          <h3>Calendar PWA</h3>
-          <div className='add-box' onClick={ this.switchModal.bind(this, true) }>
-            <Icon type='plus' />
+          <h3>PWA Demo</h3>
+          <div className='add-box'>
+            <i className='iconfont icon-add' onClick={ this.switchModal.bind(this, true) } />
+            <i className='iconfont icon-login' onClick={ this.goLogin } />
           </div>
         </div>
         <div className='dashboard-content'>
@@ -117,7 +128,7 @@ export class Dashboard extends React.Component<DashboardPropsInfo, DashboardStat
           {
             toDoList.map((item, index) =><List.Item key={ String(item.title + item.date) }>
                 <label>
-                  <span className='title-index'>{ ++index }</span>
+                  <span className='title-index'>{ index + 1 }.</span>
                   <span className='title-name'>{ item.title }</span>
                 </label>
                 <div className='item-content' key={ String(item) }>

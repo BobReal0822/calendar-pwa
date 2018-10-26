@@ -32,9 +32,6 @@ class Home extends React.Component<HomePropsInfo, HomeStateInfo> {
     };
   }
 
-  componentWillMount() {
-  }
-
   render() {
 
     return (
