@@ -7,8 +7,6 @@ var filesToCache = [
   '/index.js',
   '/js/index.js',
   '/js/proxy.js',
-  '/icon/80.png',
-  '/icon/108png',
   '/icon/120.png',
   '/icon/256.png'
 ];
