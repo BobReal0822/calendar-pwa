@@ -9,6 +9,7 @@
     "dev": "npm run clean && nat dev",
     "dev-joint": "npm run clean && nat dev",
     "build": "npm run clean && nat build",
+    "build-w": "npm run clean && nat build -w",
     "server": "node ./dist/server.js",
     "mon": "nodemon ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
