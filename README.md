@@ -1,4 +1,4 @@
-# Calendar WPA
+# Calendar PWA
 
 ## Prerequisites
 - Node.js 8+
